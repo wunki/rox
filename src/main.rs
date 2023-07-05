@@ -1,3 +1,7 @@
+#![allow(dead_code)]
+
+mod scanner;
+
 use std::{
     fs::read_to_string,
     io::{self, Write},
@@ -15,6 +19,11 @@ fn main() {
     } else {
         run_prompt();
     }
+}
+
+/// The main interpreter struct which holds the state of the interpreter.
+struct Rox {
+    had_error: bool,
 }
 
 /// Reads the whole file and runs it.
@@ -41,4 +50,14 @@ fn run_prompt() {
 /// The meat and potatoes of the interpreter.
 fn run(source: String) {
     println!("{}", source);
+}
+
+/// Reports an error to the user.
+fn error(line: usize, message: &str) {
+    report(line, "", message);
+}
+
+/// Pretty prints an error message.
+fn report(line: usize, location: &str, message: &str) {
+    println!("[line {}] Error {}: {}", line, location, message);
 }
